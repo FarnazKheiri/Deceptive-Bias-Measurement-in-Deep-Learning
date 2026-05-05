@@ -26,5 +26,22 @@ Due to size constraints, raw histopathology images are not hosted in this reposi
 
 ## Getting Started
 1. Installation
-```bash
-pip install tensorflow sklearn fairlearn numpy
+ `pip install tensorflow sklearn numpy`
+2. Running the Deceptive Pipeline
+    To reproduce the Deceptive Signal ($S$) calculation for a specific architecture (e.g., EfficientNet-B0 at the Johns Hopkins site):
+ ```
+ from data_full_exclusion import get_full_exclusion_data
+ from data_partial_inclusion import get_partial_inclusion_data
+ from models import get_efficientnet_model
+ 
+ # Establish Baseline (Phase 1)
+ (train_x, train_y), _, (eval_x, eval_y) = get_full_exclusion_data(images, labels, centers)
+ 
+ # Calculate Shortcut Signal (Phase 2)
+ (train_deceptive_x, train_deceptive_y), _, _ = get_partial_inclusion_data(images, labels, centers, target_class=[0, 1])
+```
+
+## Citation
+If you use this code or the Deceptive Signal metric in your research, please cite our manuscript:
+
+`Kheiri, F., et al. (2026). Deceptive Bias Measurement in Deep Learning: Assessing Shortcut Reliance in TCGA Cancer Models`
